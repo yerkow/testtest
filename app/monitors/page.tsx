@@ -2,16 +2,17 @@
 
 import { DashboardLayout } from '@/components/layout/dashboard-layout'
 import { MonitorStats } from '@/components/monitor-stats'
+import { ShowStatusDetails } from '@/components/show-status-details'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -20,21 +21,21 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Monitor } from '@/lib/types'
 import {
-  Activity,
-  CheckCircle,
-  Clock,
-  ExternalLink,
-  Loader2,
-  Plus,
-  Search,
-  Settings,
-  Trash2,
-  XCircle
+    Activity,
+    CheckCircle,
+    Clock,
+    ExternalLink,
+    Loader2,
+    Plus,
+    Search,
+    Settings,
+    Trash2,
+    XCircle
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'; // Если используете sonner для уведомлений
 
-const API_BASE_URL = 'http://localhost:4000/api'
+const API_BASE_URL = 'https://s.ispark.kz/api'
 
 export default function MonitorsPage() {
     const [monitors, setMonitors] = useState<Monitor[]>([])
@@ -379,23 +380,27 @@ function MonitorTable({ monitors, onDelete, onCheck }: MonitorTableProps) {
                                     </div>
                                 </TableCell>
                                 <TableCell>
-                                    {monitor.status === 'up' ? (
-                                        <Badge
-                                            variant="outline"
-                                            className="bg-green-50 text-green-700 border-green-200 dark:bg-green-950 dark:text-green-300 dark:border-green-800"
-                                        >
-                                            <CheckCircle className="h-3 w-3 mr-1" />
-                                            Up
-                                        </Badge>
-                                    ) : (
-                                        <Badge
-                                            variant="outline"
-                                            className="bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-800"
-                                        >
-                                            <XCircle className="h-3 w-3 mr-1" />
-                                            Down
-                                        </Badge>
-                                    )}
+                                    <ShowStatusDetails
+                                        name={monitor.name}
+                                        trigger={monitor.status === 'up' ? (
+                                            <Badge
+                                                variant="outline"
+                                                className="bg-green-50 text-green-700 border-green-200 dark:bg-green-950 dark:text-green-300 dark:border-green-800"
+                                            >
+                                                <CheckCircle className="h-3 w-3 mr-1" />
+                                                Up
+                                            </Badge>
+                                        ) : (
+                                            <Badge
+                                                variant="outline"
+                                                className="bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-800"
+                                            >
+                                                <XCircle className="h-3 w-3 mr-1" />
+                                                Down
+                                            </Badge>
+                                        )}
+                                        id={monitor.id}
+                                    />
                                 </TableCell>
                                 <TableCell>{monitor.uptime}%</TableCell>
                                 <TableCell>{monitor.status === 'up' ? `${monitor.response_time}ms` : '-'}</TableCell>
