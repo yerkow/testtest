@@ -1,10 +1,11 @@
 export interface Monitor {
-  id: string;
+  id: number;
   name: string;
   url: string;
   interval: number; // in seconds
   type: 'http' | 'ping' | 'tcp' | 'keyword';
   keyword?: string;
+  uptime: number;
   port?: number;
   expected_status_code?: number;
   created_at: string;
@@ -30,3 +31,16 @@ export interface Notification {
   config: Record<string, any>;
   created_at: string;
 }
+
+// export interface Monitor {
+//     id: string name: string url: string checkInterval: number // in minutes
+//     status?: 'up' | 'down' | 'checking'
+//     lastChecked?: string // ISO date string
+//     responseTime?: number // in milliseconds
+//     createdAt: string // ISO date string
+//     history?: {
+//         status: 'up' | 'down' | 'checking'
+//         timestamp: string // ISO date string
+//         responseTime?: number // in milliseconds
+//     }[]
+// }
